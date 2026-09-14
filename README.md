@@ -1,6 +1,6 @@
 # Smart Expense & Budget API
 
-A personal finance backend built with FastAPI, PostgreSQL, SQLAlchemy, and JWT auth.
+A personal finance backend built with FastAPI, MySQL, SQLAlchemy, and JWT auth.
 Manage income, expenses, categories, monthly budgets, and see spending reports.
 
 ## Architecture & Data Flow
@@ -8,7 +8,7 @@ Manage income, expenses, categories, monthly budgets, and see spending reports.
 The following diagram shows both the database relationships and the complete request flow from the client through FastAPI, authentication, validation, router logic, SQLAlchemy, and the MySQL database.
 
 <p align="center">
-  <img src="assets/flowchart_data_model_&_request_flow.png" alt="Smart Expense & Budget API architecture and data flow" width="900">
+  <img src="docs/flowchart_data_model_&amp;_request_flow.png" alt="Smart Expense & Budget API architecture and data flow" width="900">
 </p>
 
 ## Project Showcase
@@ -18,7 +18,7 @@ The following diagram shows both the database relationships and the complete req
 The project includes interactive Swagger/OpenAPI documentation for testing and exploring the available endpoints.
 
 <p align="center">
-  <img src="assets/showcase_1_endpoints.png" alt="Smart Expense & Budget API Swagger endpoints" width="900">
+  <img src="docs/showcase_1_endpoints.png" alt="Smart Expense & Budget API Swagger endpoints" width="900">
 </p>
 
 ### 2. JWT Login
@@ -26,7 +26,7 @@ The project includes interactive Swagger/OpenAPI documentation for testing and e
 The login endpoint authenticates the user and returns a JWT bearer access token that is used to access protected endpoints.
 
 <p align="center">
-  <img src="assets/showcase_2_login.png" alt="JWT login response in Swagger UI" width="900">
+  <img src="docs/showcase_2_login.png" alt="JWT login response in Swagger UI" width="900">
 </p>
 
 ### 3. Monthly Financial Report
@@ -34,10 +34,16 @@ The login endpoint authenticates the user and returns a JWT bearer access token 
 The monthly report endpoint combines income, expenses, and category budgets to return a clear financial summary, including budget, spent, and remaining amounts per category.
 
 <p align="center">
-  <img src="assets/showcase_3_report.png" alt="Monthly financial report response" width="900">
+  <img src="docs/showcase_3_report.png" alt="Monthly financial report response" width="900">
 </p>
 
+## Documentation
 
+| Doc | What it covers |
+|---|---|
+| [User Manual](docs/01_user_manual.pdf) | Click-by-click guide to running and using the API through the web UI |
+| [Project Deep Dive](docs/02_project_deep_dive.pdf) | Full architecture, tech stack, and how every piece connects |
+| [Issues Log](docs/03_issues_log.pdf) | Every real error hit during setup, and how each was fixed |
 
 ## Project structure
 
@@ -165,7 +171,7 @@ curl -X POST http://127.0.0.1:8000/transactions -H "$AUTH" -H "Content-Type: app
 curl -X POST http://127.0.0.1:8000/transactions -H "$AUTH" -H "Content-Type: application/json" \
   -d '{"type": "expense", "amount": 4000, "description": "Groceries", "category_id": 1}'
 
-# Set a budget for Food: ₹5,000 for the current month
+# Set a budget for Food: Rs.5,000 for the current month
 curl -X POST http://127.0.0.1:8000/budgets -H "$AUTH" -H "Content-Type: application/json" \
   -d '{"category_id": 1, "amount": 5000, "month": 9, "year": 2026}'
 
@@ -183,10 +189,12 @@ Sample `/reports/monthly` response:
   "month": 9,
   "year": 2026,
   "total_income": 30000.0,
-  "total_expense": 4000.0,
-  "balance": 26000.0,
+  "total_expense": 9000.0,
+  "balance": 21000.0,
   "budgets": [
-    { "category": "Food", "budget": 5000.0, "spent": 4000.0, "remaining": 1000.0 }
+    { "category": "Food", "budget": 5000.0, "spent": 4000.0, "remaining": 1000.0 },
+    { "category": "Transport", "budget": 3000.0, "spent": 2000.0, "remaining": 1000.0 },
+    { "category": "Shopping", "budget": 4000.0, "spent": 3000.0, "remaining": 1000.0 }
   ]
 }
 ```
